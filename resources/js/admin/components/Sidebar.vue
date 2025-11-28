@@ -5,6 +5,7 @@
     <nav class="space-y-3">
       <router-link class="block hover:bg-gray-700 p-2 rounded" to="/">Dashboard</router-link>
       <router-link class="block hover:bg-gray-700 p-2 rounded" to="/facilities">Facilities</router-link>
+      <router-link class="block hover:bg-gray-700 p-2 rounded" to="/products">Products</router-link>
     </nav>
   </div>
 </template>

@@ -28,7 +28,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string',
+            'product_name' => 'required|string',
+            'facility_id' => 'required',
         ]);
 
         return response()->json($this->service->create($data));

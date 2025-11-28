@@ -7,10 +7,12 @@ window.axios = axios
 import App from './App.vue'
 import Dashboard from './pages/Dashboard.vue'
 import Facilities from './pages/Facilities.vue'
+import Products from './pages/Products.vue'
 
 const routes = [
     { path: '/', component: Dashboard },
     { path: '/facilities', component: Facilities },
+    { path: '/products', component: Products },
 ]
 
 const router = createRouter({

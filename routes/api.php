@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\FacilityController;
+use App\Http\Controllers\Admin\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,10 @@ Route::prefix('admin')->group(function() {
     Route::post('/facilities', [FacilityController::class, 'store']);
     Route::put('/facilities/{id}', [FacilityController::class, 'update']);
     Route::delete('/facilities/{id}', [FacilityController::class, 'destroy']);
+
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/products/{id}', [ProductController::class, 'show']);
+    Route::post('/products', [ProductController::class, 'store']);
+    Route::put('/products/{id}', [ProductController::class, 'update']);
+    Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 });
