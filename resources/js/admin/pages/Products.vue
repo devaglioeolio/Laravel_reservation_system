@@ -138,7 +138,7 @@
             v-model="editProductName"
             type="text"
             class="w-full border p-2 rounded mb-4"
-            placeholder="상품 이름 입력"
+            placeholder=""
             />
 
             <div class="flex justify-end gap-2">
@@ -193,7 +193,7 @@
 
     const products = ref([])
     const loading = ref(true)
-    const newProduct = ref('')   // 입력값 저장
+
     // 모달 열기/닫기 상태
     const showCreateModal = ref(false)
     const showEditModal = ref(false)
@@ -283,16 +283,16 @@
 
     async function createProduct() {
         try {
-            await axios.post('/api/admin/products', {
-                facility_id: productForm.value.facility_id,
-                product_name: productForm.value.product_name,
-                type: productForm.value.type,
-                description: productForm.value.description,
-                status: productForm.value.status,
-            })
+                await axios.post('/api/admin/products', {
+                    facility_id: productForm.value.facility_id,
+                    product_name: productForm.value.product_name,
+                    type: productForm.value.type,
+                    description: productForm.value.description,
+                    status: productForm.value.status,
+                })
 
-            closeCreateModal()
-            await loadProducts() // 목록 새로고침
+                closeCreateModal()
+                await loadProducts() // 목록 새로고침
         } catch (e) {
             console.error('상품 추가 실패:', e)
         }
@@ -303,7 +303,7 @@
 
         try {
             await axios.put(`/api/admin/products/${editProductId.value}`, {
-            name: editProductName.value,
+            product_name: editProductName.value,
             })
 
             closeEditModal()

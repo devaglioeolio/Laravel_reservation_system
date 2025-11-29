@@ -38,7 +38,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'name' => 'required|string',
+           'product_name' => 'required|string',
         ]);
 
         return response()->json($this->service->update($id, $data));
