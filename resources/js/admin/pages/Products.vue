@@ -19,7 +19,10 @@
         <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow">
             <thead class="bg-gray-100 border-b">
             <tr>
+                <th class="text-left px-4 py-3 font-semibold text-gray-700">상품코드</th>
                 <th class="text-left px-4 py-3 font-semibold text-gray-700">상품명</th>
+                <th class="text-left px-4 py-3 font-semibold text-gray-700">시설</th>
+                <th class="text-left px-4 py-3 font-semibold text-gray-700">상품타입</th>
                 <th class="text-right px-4 py-3 font-semibold text-gray-700">관리</th>
             </tr>
             </thead>
@@ -30,10 +33,24 @@
                 :key="product.id"
                 class="border-b hover:bg-gray-50"
             >
+
+                <td class="px-4 py-3">
+                {{ product.id }}
+                </td>
+
                 <td class="px-4 py-3">
                 {{ product.product_name }}
                 </td>
 
+                <td class="px-4 py-3">
+                {{ product.facility_id }}
+                </td>
+
+
+                <td class="px-4 py-3">
+                {{ product.type }}
+                </td>
+                
                 <td class="px-4 py-3 text-right space-x-2">
                 <button
                     @click="openEditModal(product)"
