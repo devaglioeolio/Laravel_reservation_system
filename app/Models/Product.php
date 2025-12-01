@@ -10,4 +10,8 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = ['facility_id','product_name','type','description','status'];
+
+    public function facility(){
+        return $this->belongsTo(Facility::class);
+    }
 }

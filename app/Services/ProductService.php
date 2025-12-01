@@ -13,9 +13,9 @@ class ProductService
         $this->repo = $repo;
     }
 
-    public function getAll()
+    public function getAll($page = 1, $perPage = 10)
     {
-        return $this->repo->getAll();
+        return $this->repo->getAll($page, $perPage);
     }
 
     public function getOne($id)

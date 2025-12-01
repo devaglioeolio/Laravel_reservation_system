@@ -43,12 +43,12 @@
                 </td>
 
                 <td class="px-4 py-3">
-                {{ product.facility_id }}
+                {{ product.facility.name }}
                 </td>
 
 
                 <td class="px-4 py-3">
-                {{ product.type }}
+                {{ getTypeLabel(product.type) }}
                 </td>
                 
                 <td class="px-4 py-3 text-right space-x-2">
@@ -69,6 +69,45 @@
             </tr>
             </tbody>
         </table>
+
+        <!-- 페이지네이션 -->
+        <div class="mt-4 flex items-center justify-center gap-2">
+            <button
+                @click="loadProducts(1)"
+                :disabled="currentPage === 1"
+                class="px-3 py-2 rounded bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400"
+            >
+                처음
+            </button>
+
+            <button
+                @click="loadProducts(currentPage - 1)"
+                :disabled="currentPage === 1"
+                class="px-3 py-2 rounded bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400"
+            >
+                이전
+            </button>
+
+            <div class="px-4 py-2 text-gray-700">
+                {{ currentPage }} / {{ totalPages }}
+            </div>
+
+            <button
+                @click="loadProducts(currentPage + 1)"
+                :disabled="currentPage === totalPages"
+                class="px-3 py-2 rounded bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400"
+            >
+                다음
+            </button>
+
+            <button
+                @click="loadProducts(totalPages)"
+                :disabled="currentPage === totalPages"
+                class="px-3 py-2 rounded bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400"
+            >
+                마지막
+            </button>
+        </div>
     </div>
 
   </div>
@@ -210,6 +249,9 @@
 
     const products = ref([])
     const loading = ref(true)
+    const currentPage = ref(1)
+    const totalPages = ref(1)
+    const perPage = 10
 
     // 모달 열기/닫기 상태
     const showCreateModal = ref(false)
@@ -223,6 +265,16 @@
     const deleteProductName = ref('')
 
     const facilities = ref([])
+
+    const typeLabels = {
+        'room': '객실 상품',
+        'ticket': '티켓형 상품',
+        'pass': '시즌권/패스'
+    }
+
+    function getTypeLabel(type) {
+        return typeLabels[type] || type
+    }
 
     const productForm = ref({
         facility_id: '',
@@ -283,10 +335,17 @@
     })
 
     // 목록 불러오기get (함수로 분리)
-    async function loadProducts() {
+    async function loadProducts(page = 1) {
         try{
-            const res = await axios.get('/api/admin/products')
-            products.value = res.data
+            const res = await axios.get('/api/admin/products', {
+                params: {
+                    page: page,
+                    per_page: perPage
+                }
+            })
+            products.value = res.data.data
+            currentPage.value = res.data.current_page
+            totalPages.value = res.data.last_page
         } catch (e) {
             console.error('상품 목록 불러오기 실패:', e)
         }

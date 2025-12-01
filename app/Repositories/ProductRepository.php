@@ -6,9 +6,11 @@ use App\Models\Product;
 
 class ProductRepository
 {
-    public function getAll()
+    public function getAll($page = 1, $perPage = 10)
     {
-        return Product::all();
+        return Product::with('facility')
+            ->orderBy('id', 'desc')
+            ->paginate($perPage, ['*'], 'page', $page);
     }
 
     public function findById($id)
