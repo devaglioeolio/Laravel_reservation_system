@@ -15,7 +15,7 @@ class ProductRepository
 
     public function findById($id)
     {
-        return Product::findOrFail($id);
+        return Product::with('facility')->findOrFail($id);
     }
 
     public function create(array $data)

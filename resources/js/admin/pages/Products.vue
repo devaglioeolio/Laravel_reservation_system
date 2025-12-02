@@ -53,10 +53,10 @@
                 
                 <td class="px-4 py-3 text-right space-x-2">
                 <button
-                    @click="openEditModal(product)"
-                    class="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600"
+                    @click="goToDetail(product.id)"
+                    class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600"
                 >
-                    수정
+                    상세
                 </button>
 
                 <button
@@ -182,35 +182,6 @@
             </div>
         </div>
     </div>
-    <!-- 수정 모달 -->
-    <div
-        v-if="showEditModal"
-        class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-    >
-        <div class="bg-white rounded-lg w-96 p-6 shadow-xl">
-            <h2 class="text-xl font-bold mb-4">상품 수정</h2>
-
-            <input
-            v-model="editProductName"
-            type="text"
-            class="w-full border p-2 rounded mb-4"
-            placeholder=""
-            />
-
-            <div class="flex justify-end gap-2">
-                <button @click="closeEditModal" class="px-4 py-2 rounded bg-gray-300">
-                    취소
-                </button>
-
-                <button
-                    @click="updateProduct"
-                    class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
-                >
-                    저장
-                </button>
-            </div>
-        </div>
-    </div>
 
     <!-- 삭제 확인 모달 -->
     <div
@@ -245,8 +216,10 @@
 
 <script setup>
     import { ref, onMounted } from 'vue'
+    import { useRouter } from 'vue-router'
     import axios from 'axios'
 
+    const router = useRouter()
     const products = ref([])
     const loading = ref(true)
     const currentPage = ref(1)
@@ -255,11 +228,7 @@
 
     // 모달 열기/닫기 상태
     const showCreateModal = ref(false)
-    const showEditModal = ref(false)
     const showDeleteModal = ref(false)
-
-    const editProductId = ref(null)
-    const editProductName = ref('')
 
     const deleteProductId = ref(null)
     const deleteProductName = ref('')
@@ -309,14 +278,8 @@
         loadFacilities()
     })
 
-    function openEditModal(product) {
-        editProductId.value = product.id
-        editProductName.value = product.product_name
-        showEditModal.value = true
-    }
-
-    function closeEditModal() {
-        showEditModal.value = false
+    function goToDetail(productId) {
+        router.push(`/products/${productId}`)
     }
 
     function openDeleteModal(product) {
@@ -371,21 +334,6 @@
                 await loadProducts() // 목록 새로고침
         } catch (e) {
             console.error('상품 추가 실패:', e)
-        }
-    }
-
-    async function updateProduct() {
-        if (!editProductName.value.trim()) return
-
-        try {
-            await axios.put(`/api/admin/products/${editProductId.value}`, {
-            product_name: editProductName.value,
-            })
-
-            closeEditModal()
-            await loadProducts()
-        } catch (e) {
-            console.error('시설 수정 실패:', e)
         }
     }
 

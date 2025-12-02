@@ -8,11 +8,13 @@ import App from './App.vue'
 import Dashboard from './pages/Dashboard.vue'
 import Facilities from './pages/Facilities.vue'
 import Products from './pages/Products.vue'
+import ProductDetail from './pages/ProductDetail.vue'
 
 const routes = [
     { path: '/', component: Dashboard },
     { path: '/facilities', component: Facilities },
     { path: '/products', component: Products },
+    { path: '/products/:id', component: ProductDetail },
 ]
 
 const router = createRouter({
