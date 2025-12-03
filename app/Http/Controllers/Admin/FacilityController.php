@@ -15,9 +15,11 @@ class FacilityController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json($this->service->getAll());
+        $page = $request->query('page', 1);
+        $perPage = $request->query('per_page', 10);
+        return response()->json($this->service->getAll($page, $perPage));
     }
 
         public function show($id)

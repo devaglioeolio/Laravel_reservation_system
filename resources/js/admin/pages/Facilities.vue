@@ -52,6 +52,45 @@
             </tr>
             </tbody>
         </table>
+
+        <!-- 페이지네이션 -->
+        <div class="mt-4 flex items-center justify-center gap-2">
+            <button
+                @click="loadFacilities(1)"
+                :disabled="currentPage === 1"
+                class="px-3 py-2 rounded bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400"
+            >
+                처음
+            </button>
+
+            <button
+                @click="loadFacilities(currentPage - 1)"
+                :disabled="currentPage === 1"
+                class="px-3 py-2 rounded bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400"
+            >
+                이전
+            </button>
+
+            <div class="px-4 py-2 text-gray-700">
+                {{ currentPage }} / {{ totalPages }}
+            </div>
+
+            <button
+                @click="loadFacilities(currentPage + 1)"
+                :disabled="currentPage === totalPages"
+                class="px-3 py-2 rounded bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400"
+            >
+                다음
+            </button>
+
+            <button
+                @click="loadFacilities(totalPages)"
+                :disabled="currentPage === totalPages"
+                class="px-3 py-2 rounded bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-400"
+            >
+                마지막
+            </button>
+        </div>
     </div>
 
   </div>
@@ -154,6 +193,9 @@
     const facilities = ref([])
     const loading = ref(true)
     const newFacility = ref('')   // 입력값 저장
+    const currentPage = ref(1)
+    const totalPages = ref(1)
+    const perPage = 10
     // 모달 열기/닫기 상태
     const showCreateModal = ref(false)
     const showEditModal = ref(false)
@@ -202,10 +244,17 @@
     })
 
     // 목록 불러오기get (함수로 분리)
-    async function loadFacilities() {
+    async function loadFacilities(page = 1) {
         try{
-            const res = await axios.get('/api/admin/facilities')
-            facilities.value = res.data
+            const res = await axios.get('/api/admin/facilities', {
+                params: {
+                    page: page,
+                    per_page: perPage
+                }
+            })
+            facilities.value = res.data.data
+            currentPage.value = res.data.current_page
+            totalPages.value = res.data.last_page
         } catch (e) {
             console.error('시설 목록 불러오기 실패:', e)
         }

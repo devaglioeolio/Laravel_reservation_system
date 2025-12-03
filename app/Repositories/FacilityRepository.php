@@ -6,9 +6,10 @@ use App\Models\Facility;
 
 class FacilityRepository
 {
-    public function getAll()
+    public function getAll($page = 1, $perPage = 10)
     {
-        return Facility::all();
+        return Facility::orderBy('id', 'desc')
+            ->paginate($perPage, ['*'], 'page', $page);
     }
 
     public function findById($id)
