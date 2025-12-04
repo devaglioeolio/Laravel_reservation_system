@@ -52,10 +52,10 @@
         <label class="block mb-2 text-sm font-semibold text-gray-700">상태</label>
         <div class="text-gray-900 p-2 bg-gray-50 rounded">
           <span v-if="product.status" class="bg-green-200 text-green-800 px-3 py-1 rounded text-sm font-semibold">
-            활성화 (판매중)
+           판매중
           </span>
           <span v-else class="bg-gray-200 text-gray-800 px-3 py-1 rounded text-sm font-semibold">
-            비활성화 (판매중지)
+           판매중지
           </span>
         </div>
       </div>
