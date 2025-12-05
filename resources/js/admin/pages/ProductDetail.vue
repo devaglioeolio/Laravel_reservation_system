@@ -5,13 +5,13 @@
           @click="goBack"
           class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
       >
-          ← 뒤로
+          ← 뒤로가기
       </button>
       <h1 class="text-2xl font-bold">상품 상세</h1>
     </div>
 
     <!-- 로딩 표시 -->
-    <div v-if="loading" class="text-gray-500">Loading...</div>
+    <div v-if="loading" class="text-gray-500">Loading..</div>
 
     <!-- 상세 정보 -->
     <div v-else-if="product" class="bg-white rounded-lg shadow p-6">
